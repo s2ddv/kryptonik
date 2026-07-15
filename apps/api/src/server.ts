@@ -1,11 +1,17 @@
-import { buildApp } from "./app.js";
+import Fastify from "fastify";
+import cors from "@fastify/cors";
+import redisPlugin from "./plugins/redis.js";
+import marketRoutes from "./modules/market/market.routes.js";
 
-const app = buildApp();
-const port = Number(process.env.API_PORT ?? 3001);
+const fastify = Fastify({ logger: true });
 
-try {
-  await app.listen({ port, host: "0.0.0.0" });
-} catch (error) {
-  app.log.error(error);
-  process.exit(1);
-}
+await fastify.register(cors);
+await fastify.register(redisPlugin);
+await fastify.register(marketRoutes);
+
+fastify.listen({ port: 3000, host: "0.0.0.0" }, (err) => {
+  if (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+});
