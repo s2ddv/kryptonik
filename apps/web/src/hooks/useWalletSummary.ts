@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { WalletSummary } from "@kryptonik/shared";
-import { apiFetch } from "@/lib/api";
+import { apiFetch } from "../lib/api";
 
 const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 

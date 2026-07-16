@@ -19,7 +19,7 @@ export class CoinGeckoClient {
     this.apiKey = apiKey;
   }
 
-  async getTopGainers(limit = 10): Promise<CoinGeckoMarketItem[]> {
+  async getSpot(limit = 10): Promise<CoinGeckoMarketItem[]> {
     const params = new URLSearchParams({
       vs_currency: "usd",
       order: "price_change_percentage_24h_desc",

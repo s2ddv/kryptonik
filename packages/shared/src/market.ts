@@ -1,4 +1,4 @@
-export interface TopGainer {
+export interface Spot {
   id: string;
   symbol: string;
   name: string;
@@ -8,7 +8,7 @@ export interface TopGainer {
   marketCap: number;
 }
 
-export interface TopGainersResponse {
-  data: TopGainer[];
+export interface SpotResponse {
+  data: Spot[];
   cachedAt: string;
 }

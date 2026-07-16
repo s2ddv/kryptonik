@@ -1,23 +1,23 @@
 "use client";
 
-import { useTopGainers } from "@/hooks/useTopGainers";
+import { useSpot } from "../../hooks/useSpot";
 
 export function CoinsCard() {
-  const { data, isLoading, isError } = useTopGainers();
+  const { data, isLoading, isError } = useSpot();
 
   return (
     <div className="bg-neutral-900 rounded-xl p-6 h-full overflow-y-auto">
       <h2 className="text-lg font-semibold text-neutral-100 mb-4">
-        Top Gainers
+        Spot
       </h2>
 
       {isLoading && (
-        <p className="text-neutral-400 text-sm">Carregando...</p>
+        <p className="text-neutral-400 text-sm">Loading...</p>
       )}
 
       {isError && (
         <p className="text-red-400 text-sm">
-          Não foi possível carregar os dados de mercado.
+          Failed to load market data.
         </p>
       )}
 

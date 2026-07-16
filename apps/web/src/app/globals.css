@@ -1,20 +1,28 @@
 @import "tailwindcss";
-
+ 
 :root {
+  --color-brand-50: #f4f1fb;
+  --color-brand-100: #e5ddf6;
+  --color-brand-300: #b9a3e8;
+  --color-brand-400: #9b7ce0;
+  --color-brand-500: #7c4fd9;
+  --color-brand-600: #6738c2;
+  --color-brand-700: #512b97;
+  --color-brand-900: #241350;
   background: #09090b;
   color: #f4f4f5;
 }
-
+ 
 * {
   box-sizing: border-box;
 }
-
+ 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+ 
 main {
   display: grid;
   min-height: 100vh;
@@ -22,16 +30,16 @@ main {
   gap: 0.75rem;
   padding: 2rem;
 }
-
+ 
 p {
   margin: 0;
-  color: #a3e635;
+  color: #7c4fd9;
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
+ 
 h1 {
   max-width: 38rem;
   margin: 0;

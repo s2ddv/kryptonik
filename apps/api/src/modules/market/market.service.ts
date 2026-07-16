@@ -1,8 +1,8 @@
 import type { FastifyInstance } from "fastify";
-import type { TopGainer, TopGainersResponse } from "@kryptonik/shared";
+import type { Spot, SpotResponse } from "@kryptonik/shared";
 import { CoinGeckoClient } from "../../clients/coingecko.js";
 
-const CACHE_KEY = "market:top-gainers";
+const CACHE_KEY = "market:spot";
 const CACHE_TTL_SECONDS = 60; // ajusta conforme necessidade (60s-300s é razoável pra dados de mercado)
 
 export class MarketService {
@@ -12,16 +12,16 @@ export class MarketService {
     this.coingecko = new CoinGeckoClient(process.env.COINGECKO_API_KEY);
   }
 
-  async getTopGainers(): Promise<TopGainersResponse> {
+  async getSpot(): Promise<SpotResponse> {
     const cached = await this.fastify.redis.get(CACHE_KEY);
 
     if (cached) {
-      return JSON.parse(cached) as TopGainersResponse;
+      return JSON.parse(cached) as SpotResponse;
     }
 
-    const raw = await this.coingecko.getTopGainers(10);
+    const raw = await this.coingecko.getSpot(10);
 
-    const data: TopGainer[] = raw.map((item) => ({
+    const data: Spot[] = raw.map((item) => ({
       id: item.id,
       symbol: item.symbol,
       name: item.name,
@@ -31,7 +31,7 @@ export class MarketService {
       marketCap: item.market_cap,
     }));
 
-    const response: TopGainersResponse = {
+    const response: SpotResponse = {
       data,
       cachedAt: new Date().toISOString(),
     };
