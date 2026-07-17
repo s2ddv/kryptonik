@@ -7,7 +7,7 @@ export default function DashboardPage() {
       <WalletCard />
       <div className="grid grid-cols-2 gap-4">
         <CoinsCard />
-        <div className="bg-neutral-900 rounded-xl p-6">
+        <div className="liquid-glass rounded-xl p-6">
           {/* News - próxima etapa */}
         </div>
       </div>
