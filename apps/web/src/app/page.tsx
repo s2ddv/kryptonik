@@ -3,7 +3,7 @@ import { CoinsCard } from "../components/dashboard/coinsCard";
 
 export default function DashboardPage() {
   return (
-    <div className="grid grid-rows-[2fr_1fr] gap-4 h-screen p-4">
+    <div className="grid grid-rows-[600px_400px] gap-4 h-screen p-4">
       <WalletCard />
       <div className="grid grid-cols-2 gap-4">
         <CoinsCard />

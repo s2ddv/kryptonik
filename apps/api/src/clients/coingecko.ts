@@ -11,15 +11,14 @@ interface CoinGeckoMarketItem {
 }
 
 export class CoinGeckoClient {
-  private readonly baseUrl: string;
-  private readonly apiKey?: string;
+  private readonly baseUrl = COINGECKO_BASE_URL;
+  private readonly apiKey: string | undefined;
 
   constructor(apiKey?: string) {
-    this.baseUrl = COINGECKO_BASE_URL;
     this.apiKey = apiKey;
   }
 
-  async getSpot(limit = 10): Promise<CoinGeckoMarketItem[]> {
+  async getMarkets(limit = 10): Promise<CoinGeckoMarketItem[]> {
     const params = new URLSearchParams({
       vs_currency: "usd",
       order: "price_change_percentage_24h_desc",
@@ -33,9 +32,7 @@ export class CoinGeckoClient {
       headers["x-cg-demo-api-key"] = this.apiKey;
     }
 
-    const response = await fetch(`${this.baseUrl}/coins/markets?${params}`, {
-      headers,
-    });
+    const response = await fetch(`${this.baseUrl}/coins/markets?${params}`, { headers });
 
     if (!response.ok) {
       throw new Error(`CoinGecko API error: ${response.status} ${response.statusText}`);

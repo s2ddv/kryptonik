@@ -14,5 +14,12 @@
     "build": "pnpm --filter @kryptonik/web build && pnpm --filter @kryptonik/api build",
     "lint": "pnpm --parallel --filter @kryptonik/web --filter @kryptonik/api lint",
     "typecheck": "pnpm --parallel --filter @kryptonik/web --filter @kryptonik/api typecheck"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "lenis": "^1.3.25",
+    "lucide-react": "^1.24.0"
   }
 }
