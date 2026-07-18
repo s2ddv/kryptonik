@@ -65,10 +65,7 @@ export default function LoginPage() {
       <div className="flex min-h-screen flex-col items-center justify-center px-4">
         <div className="w-full max-w-[360px]">
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-semibold text-white">Entrar na Zora</h1>
-            <p className="mt-2 text-sm text-zinc-500">
-              Acompanhe seu portfólio on-chain
-            </p>
+            <h1 className="text-3xl font-semibold text-white">Sign in to Zora</h1>
           </div>
 
           <form onSubmit={handleContinue} className="space-y-4">
@@ -80,7 +77,7 @@ export default function LoginPage() {
                 disabled={showPassword}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Digite seu e-mail"
+                placeholder="Enter your email"
                 className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3.5 text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-emerald-500 disabled:opacity-50"
               />
             </div>
@@ -93,7 +90,7 @@ export default function LoginPage() {
                   autoFocus
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Digite sua senha"
+                  placeholder="Enter your password"
                   className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3.5 text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-emerald-500"
                 />
               </div>
@@ -106,13 +103,13 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full rounded-xl bg-emerald-500 py-3.5 text-sm font-semibold text-black transition hover:bg-emerald-400 disabled:opacity-50"
             >
-              {loading ? 'Entrando...' : 'Continuar'}
+              {loading ? 'Signing in...' : 'Continue'}
             </button>
           </form>
 
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-zinc-800" />
-            <span className="text-xs font-medium text-zinc-600">OU</span>
+            <span className="text-xs font-medium text-zinc-600">OR</span>
             <div className="h-px flex-1 bg-zinc-800" />
           </div>
 
@@ -122,13 +119,13 @@ export default function LoginPage() {
             className="flex w-full items-center justify-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 py-3.5 text-sm font-medium text-white transition hover:bg-zinc-900 disabled:opacity-50"
           >
             <GoogleIcon className="h-4 w-4" />
-            Entrar com Google
+            Sign in with Google
           </button>
 
-          <p className="mt-8 text-center text-sm text-zinc-500">
-            Não tem conta?{' '}
-            <Link href="/signup" className="font-medium text-emerald-400 hover:underline">
-              Criar conta
+          <p className="mt-8 text-center text-white">
+            Don't have an account?{' '}
+            <Link href="/signup" className="font-medium text-sm-400 hover:underline">
+              Create account
             </Link>
           </p>
         </div>
