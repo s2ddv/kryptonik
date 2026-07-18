@@ -1,17 +1,21 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { ZoraLogo } from '@/components/zora-logo'
 
-export default function SignupPage() {
+export default function LoginPage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirect') ?? '/dashboard'
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
 
   async function handleContinue(e: React.FormEvent) {
     e.preventDefault()
@@ -25,11 +29,7 @@ export default function SignupPage() {
     setError(null)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
       setError(error.message)
@@ -37,40 +37,23 @@ export default function SignupPage() {
       return
     }
 
-    setSuccess(true)
-    setLoading(false)
+    router.push(redirectTo)
+    router.refresh()
   }
 
-  async function handleGoogleSignup() {
+  async function handleGoogleLogin() {
     setLoading(true)
     const supabase = createClient()
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`,
+      },
     })
     if (error) {
       setError(error.message)
       setLoading(false)
     }
-  }
-
-  if (success) {
-    return (
-      <div className="relative min-h-screen bg-zinc-950">
-        <div className="absolute left-8 top-8">
-          <ZoraLogo className="h-8 w-8 text-emerald-400" />
-        </div>
-        <div className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
-          <div className="w-full max-w-[360px]">
-            <h1 className="text-2xl font-semibold text-white">Confirme seu e-mail</h1>
-            <p className="mt-3 text-sm text-zinc-500">
-              Enviamos um link de confirmação para <span className="text-zinc-300">{email}</span>.
-              Clique nele para ativar sua conta.
-            </p>
-          </div>
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -82,9 +65,9 @@ export default function SignupPage() {
       <div className="flex min-h-screen flex-col items-center justify-center px-4">
         <div className="w-full max-w-[360px]">
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-semibold text-white">Crie sua conta</h1>
+            <h1 className="text-3xl font-semibold text-white">Entrar na Zora</h1>
             <p className="mt-2 text-sm text-zinc-500">
-              Comece a acompanhar seu portfólio
+              Acompanhe seu portfólio on-chain
             </p>
           </div>
 
@@ -107,11 +90,10 @@ export default function SignupPage() {
                 <input
                   type="password"
                   required
-                  minLength={6}
                   autoFocus
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Crie uma senha (mín. 6 caracteres)"
+                  placeholder="Digite sua senha"
                   className="w-full rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3.5 text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-emerald-500"
                 />
               </div>
@@ -124,7 +106,7 @@ export default function SignupPage() {
               disabled={loading}
               className="w-full rounded-xl bg-emerald-500 py-3.5 text-sm font-semibold text-black transition hover:bg-emerald-400 disabled:opacity-50"
             >
-              {loading ? 'Criando conta...' : 'Continuar'}
+              {loading ? 'Entrando...' : 'Continuar'}
             </button>
           </form>
 
@@ -135,25 +117,19 @@ export default function SignupPage() {
           </div>
 
           <button
-            onClick={handleGoogleSignup}
+            onClick={handleGoogleLogin}
             disabled={loading}
             className="flex w-full items-center justify-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 py-3.5 text-sm font-medium text-white transition hover:bg-zinc-900 disabled:opacity-50"
           >
             <GoogleIcon className="h-4 w-4" />
-            Cadastrar com Google
+            Entrar com Google
           </button>
 
           <p className="mt-8 text-center text-sm text-zinc-500">
-            Já tem conta?{' '}
-            <Link href="/login" className="font-medium text-emerald-400 hover:underline">
-              Entrar
+            Não tem conta?{' '}
+            <Link href="/signup" className="font-medium text-emerald-400 hover:underline">
+              Criar conta
             </Link>
-          </p>
-
-          <p className="mt-6 text-center text-xs leading-relaxed text-zinc-600">
-            Ao criar uma conta, você confirma que tem mais de 18 anos e concorda com nossos{' '}
-            <Link href="/terms" className="underline hover:text-zinc-400">Termos de Uso</Link> e{' '}
-            <Link href="/privacy" className="underline hover:text-zinc-400">Política de Privacidade</Link>.
           </p>
         </div>
       </div>
