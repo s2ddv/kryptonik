@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { ZoraLogo } from '@/components/zora-logo'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -59,10 +58,6 @@ export default function LoginPage() {
 
   return (
     <div className="relative min-h-screen bg-white">
-      {}
-      <div className="absolute left-8 top-8">
-        <ZoraLogo className="h-8 w-8 text-[#241350]" />
-      </div>
 
       <div className="flex min-h-screen flex-col items-center justify-center px-4">
         {}
@@ -88,7 +83,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="w-full rounded-xl border border-zinc-300 bg-white px-4 py-4 text-[15px] text-zinc-900 placeholder:text-zinc-500 outline-none transition focus:border-[#241350] disabled:opacity-50"
+                className="w-full rounded-xl border-2 border-zinc-300 bg-white px-4 py-4 text-[15px] text-zinc-900 placeholder:text-zinc-500 outline-none transition-colors focus:border-[#7c4fd9] disabled:opacity-50"
               />
             </div>
 
@@ -134,14 +129,17 @@ export default function LoginPage() {
           </button>
 
           {}
-          <p className="text-center text-sm" style={{ color: '#000000' }}>
+          <p
+            className="text-center text-sm normal-case font-normal tracking-normal"
+            style={{ color: '#000000', textTransform: 'none' }}
+          >
             Don&apos;t have an account?{' '}
             <Link
               href="/signup"
-              className="font-medium hover:underline"
-              style={{ color: '#7c4fd9' }}
+              className="font-medium hover:underline normal-case"
+              style={{ color: '#7c4fd9', textTransform: 'none' }}
             >
-              Sign Up
+              Sign up
             </Link>
           </p>
         </div>
