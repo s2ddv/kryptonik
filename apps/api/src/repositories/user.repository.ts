@@ -1,17 +1,32 @@
-import type { PrismaClient } from "@kryptonik/database";
+import { prisma } from "../lib/prisma.js";
 
-export class UserRepository {
-  constructor(private readonly db: PrismaClient) {}
-
-  findById(id: string) {
-    return this.db.user.findUnique({ where: { id } });
-  }
+export const userRepository = {
+  create(email: string, name?: string) {
+    return prisma.user.create({
+      data: { email, name },
+    });
+  },
 
   findByEmail(email: string) {
-    return this.db.user.findUnique({ where: { email } });
-  }
+    return prisma.user.findUnique({
+      where: { email },
+    });
+  },
 
-  findByAuthId(authId: string) {
-    return this.db.user.findUnique({ where: { authId } });
-  }
-}
+  findById(id: string) {
+    return prisma.user.findUnique({
+      where: { id },
+    });
+  },
+
+  findByIdWithRelations(id: string) {
+    return prisma.user.findUnique({
+      where: { id },
+      include: {
+        wallets: true,
+        watchlists: true,
+        exchangeConnections: true,
+      },
+    });
+  },
+};
